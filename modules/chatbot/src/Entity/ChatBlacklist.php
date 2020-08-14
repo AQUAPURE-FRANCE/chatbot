@@ -35,8 +35,6 @@ class ChatBlacklist
 
 
 
-
-
     /**
      * @return int
      */

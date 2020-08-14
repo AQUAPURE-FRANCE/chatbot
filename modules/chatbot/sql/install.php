@@ -45,7 +45,6 @@ $sql[] = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'chat_message` (
 ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8;';
 
 
-
 $sql[] = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'chat_subject` (
     `id_chat_subject` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(225) NOT NULL,
