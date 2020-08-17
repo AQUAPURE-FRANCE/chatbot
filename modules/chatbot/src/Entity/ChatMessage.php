@@ -4,6 +4,8 @@
 namespace Chatbot\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
 
 
 /**
@@ -28,8 +30,39 @@ class ChatMessage
      * @var int
      *
      * @ORM\Column(name="id_chat_subject", type="integer")
+     *      @ORM\ManyToOne(targetEntity="Chatbot\Entity\ChatUser")
+     *      @JoinTable(name="chat_subject",
+     *      joinColumns={@JoinColumn(name="id_message", referencedColumnName="id_message")},
+     *      inverseJoinColumns={@JoinColumn(name="id_chat_message", referencedColumnName="id_chat_message", unique=true)}
+     * )
      */
     private $chatSubject;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Chatbot\Entity\Chat", mappedBy="chatMessage")
+     */
+    private $chats;
+
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getChats()
+    {
+        return $this->chats;
+    }
+
+    /**
+     * @param mixed $chats
+     */
+    public function setChats($chats)
+    {
+        $this->chats = $chats;
+    }
+
+
 
 
     /**

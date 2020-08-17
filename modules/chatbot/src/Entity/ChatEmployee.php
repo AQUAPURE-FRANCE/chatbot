@@ -30,7 +30,7 @@ class ChatEmployee
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Chatbot\Entity\Chat", mappedBy="idChatEmployee")
+     * @ORM\OneToMany(targetEntity="Chatbot\Entity\Chat", mappedBy="chatEmployee")
      */
     private $chats;
 

@@ -4,6 +4,8 @@
 namespace Chatbot\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
 use PhpOffice\PhpSpreadsheet\Calculation\DateTime;
 
 
@@ -27,24 +29,33 @@ class Chat
 
     /**
      * @var int
-     * @ORM\ManyToOne(targetEntity="Chatbot\Entity\ChatUser", inversedBy="chats")
-     * @ORM\Column(name="id_chat_user", type="integer")
+     * @ORM\ManyToOne(targetEntity="Chatbot\Entity\ChatUser")
+     *      @JoinTable(name="chat_user",
+     *      joinColumns={@JoinColumn(name="id_chat", referencedColumnName="id_chat")},
+     *      inverseJoinColumns={@JoinColumn(name="id_chat_user", referencedColumnName="id_chat_user", unique=true)}
+     * )
      */
     private $chatUser;
 
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Chatbot\Entity\ChatEmployee", inversedBy="chats")
-     * @ORM\Column(name="id_chat_employee", type="integer")
+     * @ORM\ManyToOne(targetEntity="Chatbot\Entity\ChatEmployee")
+     * @JoinTable(name="chat_employee",
+     *      joinColumns={@JoinColumn(name="id_chat", referencedColumnName="id_chat")},
+     *      inverseJoinColumns={@JoinColumn(name="id_chat_employee", referencedColumnName="id_chat_employee", unique=true)}
+     * )
      */
     private $chatEmployee;
 
     /**
      * @var int
      *
-     * @ORM\OneToOne(targetEntity="Chatbot\Entity\ChatMessage", inversedBy="chat")
-     * @ORM\Column(name="id_chat_message", type="integer")
+     * @ORM\OneToOne(targetEntity="Chatbot\Entity\ChatMessage")
+     * @JoinTable(name="chat_message",
+     *      joinColumns={@JoinColumn(name="id_chat", referencedColumnName="id_chat")},
+     *      inverseJoinColumns={@JoinColumn(name="id_chat_message", referencedColumnName="id_chat_message", unique=true)}
+     * )
      */
     private $chatMessage;
 

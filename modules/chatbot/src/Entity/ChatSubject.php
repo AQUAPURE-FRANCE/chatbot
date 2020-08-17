@@ -31,6 +31,10 @@ class ChatSubject
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Chatbot\Entity\Chat", mappedBy="chatMessage")
+     */
+    private $subjects;
 
 
 
@@ -65,5 +69,7 @@ class ChatSubject
     {
         $this->name = $name;
     }
+
+
 
 }

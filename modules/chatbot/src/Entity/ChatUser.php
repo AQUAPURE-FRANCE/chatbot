@@ -64,9 +64,28 @@ class ChatUser
      */
     private $email;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Chatbot\Entity\Chat", mappedBy="chatUser")
+     */
+    private $chats;
 
 
 
+    /**
+     * @return mixed
+     */
+    public function getChats()
+    {
+        return $this->chats;
+    }
+
+    /**
+     * @param mixed $chats
+     */
+    public function setChats($chats)
+    {
+        $this->chats = $chats;
+    }
 
 
     /**
