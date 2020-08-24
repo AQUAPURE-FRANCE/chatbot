@@ -1,85 +1,59 @@
 <?php
 
+namespace App\Entity;
 
-namespace Chatbot\Entity;
+use App\Repository\ChatEmployeeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass=ChatEmployeeRepository::class)
  * @ORM\Table(name="ps_chat_emplyee")
  */
-
 class ChatEmployee
 {
-
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(name="id_chat_employee", type="integer")
+     * @ORM\Id()
      * @ORM\GeneratedValue()
+     * @ORM\Column(name="id_chat_employee", type="integer")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string")
+     * @ORM\Column(name="employee_id", type="integer")
      */
-    private $name;
+    private $employee;
 
     /**
-     * @ORM\OneToMany(targetEntity="Chatbot\Entity\Chat", mappedBy="idChatEmployee")
+     * @ORM\Column(name="avatar_id", type="integer")
      */
-    private $chats;
+    private $avatar;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
+    public function getEmployee(): ?int
     {
-        $this->id = $id;
+        return $this->employee;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function setEmployee(int $employee): self
     {
-        return $this->name;
+        $this->employee = $employee;
+
+        return $this;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function getAvatar(): ?int
     {
-        $this->name = $name;
+        return $this->avatar;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getChats()
+    public function setAvatar(int $avatar): self
     {
-        return $this->chats;
-    }
+        $this->avatar = $avatar;
 
-    /**
-     * @param mixed $chats
-     */
-    public function setChats($chats)
-    {
-        $this->chats = $chats;
+        return $this;
     }
-
 }

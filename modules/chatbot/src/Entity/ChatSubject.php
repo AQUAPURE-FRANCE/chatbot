@@ -1,69 +1,43 @@
 <?php
 
+namespace App\Entity;
 
-namespace Chatbot\Entity;
-
+use App\Repository\ChatSubjectRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
- * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass=ChatSubjectRepository::class)
  * @ORM\Table(name="ps_chat_subject")
  */
 
 class ChatSubject
 {
-
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(name="id_chat_subject", type="integer")
+     * @ORM\Id()
      * @ORM\GeneratedValue()
+     * @ORM\Column(name="id_chat_subject", type="integer")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string")
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
-
-
-
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setIdChatSubject($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
-    }
 
+        return $this;
+    }
 }

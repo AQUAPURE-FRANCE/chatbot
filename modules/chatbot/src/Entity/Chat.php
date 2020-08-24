@@ -1,164 +1,128 @@
 <?php
 
+namespace App\Entity;
 
-namespace Chatbot\Entity;
-
+use App\Repository\ChatRepository;
 use Doctrine\ORM\Mapping as ORM;
-use PhpOffice\PhpSpreadsheet\Calculation\DateTime;
-
 
 /**
- * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass=ChatRepository::class)
  * @ORM\Table(name="ps_chat")
  */
-
 class Chat
 {
-
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(name="id_chat", type="integer")
+     * @ORM\Id()
      * @ORM\GeneratedValue()
+     * @ORM\Column(name="id_chat", type="integer")
+     *
      */
     private $id;
 
     /**
-     * @var int
-     * @ORM\ManyToOne(targetEntity="Chatbot\Entity\ChatUser", inversedBy="chats")
      * @ORM\Column(name="id_chat_user", type="integer")
      */
     private $chatUser;
 
     /**
-     * @var int
-     *
-     * @ORM\ManyToOne(targetEntity="Chatbot\Entity\ChatEmployee", inversedBy="chats")
      * @ORM\Column(name="id_chat_employee", type="integer")
      */
     private $chatEmployee;
 
     /**
-     * @var int
-     *
-     * @ORM\OneToOne(targetEntity="Chatbot\Entity\ChatMessage", inversedBy="chat")
      * @ORM\Column(name="id_chat_message", type="integer")
      */
     private $chatMessage;
 
     /**
-     * @var Boolean
-     *
      * @ORM\Column(name="is_user_sender", type="boolean")
      */
     private $isUserSender;
 
     /**
-     * @var DateTime
-     *
+     * @ORM\Column(name="has_response", type="boolean")
+     */
+    private $hasResponse;
+
+    /**
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
-
-
-
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getChatUser()
-    {
+    public function getChatUser(): ?int
+    { 
         return $this->chatUser;
     }
 
-    /**
-     * @param int $chatUser
-     */
-    public function setChatUser($chatUser)
+    public function setChatUser(int $chatUser): self
     {
         $this->chatUser = $chatUser;
+
+        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getChatEmployee()
+    public function getChatEmployee(): ?int
     {
         return $this->chatEmployee;
     }
 
-    /**
-     * @param int $chatEmployee
-     */
-    public function setChatEmployee($chatEmployee)
+    public function setChatEmployee(int $chatEmployee): self
     {
         $this->chatEmployee = $chatEmployee;
+
+        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getChatMessage()
+    public function getChatMessage(): ?int
     {
         return $this->chatMessage;
     }
 
-    /**
-     * @param int $chatMessage
-     */
-    public function setChatMessage($chatMessage)
+    public function setChatMessage(int $chatMessage): self
     {
         $this->chatMessage = $chatMessage;
+
+        return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isUserSender()
+    public function getIsUserSender(): ?bool
     {
         return $this->isUserSender;
     }
 
-    /**
-     * @param bool $isUserSender
-     */
-    public function setIsUserSender($isUserSender)
+    public function setIsUserSender(bool $isUserSender): self
     {
         $this->isUserSender = $isUserSender;
+
+        return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
+    public function getHasResponse(): ?bool
+    {
+        return $this->hasResponse;
+    }
+
+    public function setHasResponse(bool $hasResponse): self
+    {
+        $this->hasResponse = $hasResponse;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
-    }
 
+        return $this;
+    }
 }

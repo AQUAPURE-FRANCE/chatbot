@@ -1,89 +1,59 @@
 <?php
 
+namespace App\Entity;
 
-namespace Chatbot\Entity;
-
+use App\Repository\ChatAvatarRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
- * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass=ChatAvatarRepository::class)
  * @ORM\Table(name="ps_chat_avatar")
  */
-
 class ChatAvatar
 {
-
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(name="id_chat_avatar", type="integer")
+     * @ORM\Id()
      * @ORM\GeneratedValue()
+     * @ORM\Column(name="id_chat_avatar", type="integer")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string")
+     * @ORM\Column(name="name", type="text")
      */
     private $name;
 
     /**
-     * @var boolean
-     *
      * @ORM\Column(name="is_default", type="boolean")
      */
     private $isDefault;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDefault()
+    public function getIsDefault(): ?bool
     {
         return $this->isDefault;
     }
 
-    /**
-     * @param bool $isDefault
-     */
-    public function setIsDefault($isDefault)
+    public function setIsDefault(bool $isDefault): self
     {
         $this->isDefault = $isDefault;
-    }
 
+        return $this;
+    }
 }

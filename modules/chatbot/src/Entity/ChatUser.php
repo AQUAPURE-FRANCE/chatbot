@@ -1,184 +1,171 @@
 <?php
 
+namespace App\Entity;
 
-namespace Chatbot\Entity;
+use App\Repository\ChatUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass=ChatUserRepository::class)
  * @ORM\Table(name="ps_chat_user")
  */
 
 class ChatUser
 {
-
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(name="id_chat_employee", type="integer")
+     * @ORM\Id()
      * @ORM\GeneratedValue()
+     * @ORM\Column(name="id_chat_employee", type="integer")
      */
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_guest", type="integer")
+     * @ORM\Column(name="id_guest", type="integer", nullable=true)
      */
     private $guest;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_customer", type="integer")
+     * @ORM\Column(name="id_customer", type="integer", nullable=true)
      */
-    private $customer;
+    private $costumer;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id_avatar", type="integer")
      */
     private $avatar;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="firstname", type="string")
+     * @ORM\Column(name="firstname", type="string", length=255)
      */
     private $firstname;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="lastname", type="string")
+     * @ORM\Column(name="lastname", type="string", length=255)
      */
     private $lastname;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string")
+     * @ORM\Column(type="email", nullable=true)
      */
     private $email;
 
-
-
-
-
+    /**
+     * @ORM\Column(name="is_blocked", type="boolean")
+     */
+    private $isBlocked;
 
     /**
-     * @return string
+     * @ORM\Column(name="ip_address", type="string", length=255)
      */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
+    private $ipAddress;
 
-    /**
-     * @param string $firstname
-     */
-    public function setFirstname($firstname)
-    {
-        $this->firstname = $firstname;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    /**
-     * @param string $lastname
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getGuest()
+    public function getGuest(): ?int
     {
         return $this->guest;
     }
 
-    /**
-     * @param int $guest
-     */
-    public function setGuest($guest)
+    public function setGuest(?int $guest): self
     {
         $this->guest = $guest;
+
+        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getCustomer()
+    public function getCostumer(): ?int
     {
-        return $this->customer;
+        return $this->costumer;
     }
 
-    /**
-     * @param int $customer
-     */
-    public function setCustomer($customer)
+    public function setCostumer(?int $costumer): self
     {
-        $this->customer = $customer;
+        $this->costumer = $costumer;
+
+        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getAvatar()
+    public function getAvatar(): ?int
     {
         return $this->avatar;
     }
 
-    /**
-     * @param int $avatar
-     */
-    public function setAvatar($avatar)
+    public function setAvatar(int $avatar): self
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsBlocked()
+    {
+        return $this->isBlocked;
+    }
+
+    /**
+     * @param mixed $isBlocked
+     */
+    public function setIsBlocked($isBlocked): void
+    {
+        $this->isBlocked = $isBlocked;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIpAddress()
+    {
+        return $this->ipAddress;
+    }
+
+    /**
+     * @param mixed $ipAddress
+     */
+    public function setIpAddress($ipAddress): void
+    {
+        $this->ipAddress = $ipAddress;
     }
 
 

@@ -1,73 +1,42 @@
 <?php
 
+namespace App\Entity;
 
-namespace Chatbot\Entity;
-
+use App\Repository\ChatBlacklistRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
- * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass=ChatBlacklistRepository::class)
  * @ORM\Table(name="ps_blacklist")
  */
-
 class ChatBlacklist
 {
-
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(name="id_blacklist", type="integer")
+     * @ORM\Id()
      * @ORM\GeneratedValue()
+     * @ORM\Column(name="id_blacklist", type="integer")
      */
     private $id;
 
-
     /**
-     * @var $text
-     *
      * @ORM\Column(name="text", type="text")
      */
     private $text;
 
-
-
-
-
-
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setIdBlacklist($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
 
-    /**
-     * @param mixed $text
-     */
-    public function setText($text)
+    public function setText(string $text): self
     {
         $this->text = $text;
+
+        return $this;
     }
-
-
 }

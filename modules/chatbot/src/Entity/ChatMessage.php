@@ -1,93 +1,82 @@
 <?php
 
+namespace App\Entity;
 
-namespace Chatbot\Entity;
-
+use App\Repository\ChatMessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
- * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass=ChatMessageRepository::class)
  * @ORM\Table(name="ps_chat_message")
  */
-
 class ChatMessage
 {
-
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(name="id_chat_message", type="integer")
+     * @ORM\Id()
      * @ORM\GeneratedValue()
+     * @ORM\Column(name="id_chat_message", type="integer")
      */
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_chat_subject", type="integer")
-     */
-    private $chatSubject;
-
-
-    /**
-     * @var $text
-     *
      * @ORM\Column(name="text", type="text")
      */
     private $text;
 
     /**
-     * @return int
+     * @ORM\Column(name="id_chat_subject", type="string", length=255)
      */
-    public function getId()
+    private $subject;
+
+    /**
+     * @ORM\Column(name="is_blacklisted", type="boolean")
+     */
+    private $isBlacklisted;
+
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
+    public function getText(): ?string
     {
-        $this->id = $id;
+        return $this->text;
     }
 
-    /**
-     * @return int
-     */
-    public function getChatSubject()
+    public function setText(string $text): self
     {
-        return $this->chatSubject;
+        $this->text = $text;
+
+        return $this;
     }
 
-    /**
-     * @param int $chatSubject
-     */
-    public function setChatSubject($chatSubject)
+    public function getSubject(): ?string
     {
-        $this->chatSubject = $chatSubject;
+        return $this->subject;
+    }
+
+    public function setSubject(string $subject): self
+    {
+        $this->subject = $subject;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getText()
+    public function getIsBlacklisted()
     {
-        return $this->text;
+        return $this->isBlacklisted;
     }
 
     /**
-     * @param mixed $text
+     * @param mixed $isBlacklisted
      */
-    public function setText($text)
+    public function setIsBlacklisted($isBlacklisted): void
     {
-        $this->text = $text;
+        $this->isBlacklisted = $isBlacklisted;
     }
-
-
-
 
 }
