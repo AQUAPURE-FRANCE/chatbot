@@ -9,10 +9,8 @@ use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Chatbot\Entity\Chatbot;
 use Chatbot\Form\ChatbotMailerType;
 use Chatbot\Form\ChatbotSMTPType;
-use Chatbot\Repository\ChatbotRepository;
 use Chatbot\Service\SendMailService;
 
 class AdminChatbotController extends FrameworkBundleAdminController
@@ -26,10 +24,10 @@ class AdminChatbotController extends FrameworkBundleAdminController
         /** @var EntityManagerInterface $em */
         $em = $this->getDoctrine()->getManager();
 
-        $object = new Chatbot();
+//       $object = new Chatbot();
 
-        /** @var ChatbotRepository $sfModuleRepository */
-        $repository = $this->get('chatbot_repository'); // Or: $sfModuleRepository = $em->getRepository(Chatbot::class);
+//      /** @var ChatbotRepository $sfModuleRepository */
+        /*$repository = $this->get('chatbot_repository'); // Or: $sfModuleRepository = $em->getRepository(Chatbot::class);
 
         $formSMTP = $this->createform(ChatbotSMTPType::class);
         $formSMTP->handleRequest($req);
@@ -45,9 +43,10 @@ class AdminChatbotController extends FrameworkBundleAdminController
 
         $formSendMail = $this->createform(ChatbotMailerType::class);
         $formSendMail->handleRequest($req);
+         * /
 
         /** Send mail */
-        if ($formSendMail->isSubmitted() && $formSendMail->isValid()) {
+ /*       if ($formSendMail->isSubmitted() && $formSendMail->isValid()) {
             (new SendMailService())->sendMail(
                 $formSendMail->getData()['mailer_subject'],
                 $formSendMail->getData()['mailer_to'],
@@ -61,9 +60,10 @@ class AdminChatbotController extends FrameworkBundleAdminController
 
             return $this->redirectToRoute('admin_index');
         }
+ */
 
         return $this->render('@Modules/chatbot/views/templates/admin/configure.html.twig', [
-            'var' => $repository->findSomething()
+            'var' => 'test'
 //            'formSMTP' => $formSMTP->createView(),
 //            'formSendMail' => $formSendMail->createView()
         ]);
