@@ -66,7 +66,10 @@ class Chatbot extends Module
         return parent::install() &&
             $this->registerHook('header') &&
             $this->registerHook('backOfficeHeader') &&
-            $this->installTab();
+            $this->uninstallChatbotTabOne() &&
+            $this->uninstallChatbotTabTwo() &&
+            $this->installTabOne() &&
+            $this->installTabTwo();
     }
 
     public function uninstall()
@@ -99,34 +102,57 @@ class Chatbot extends Module
     }
 
 
-    private function installTab()
+    private function installTabOne()
     {
-        $tabId = (int) Tab::getIdFromClassName('AdminChatbotController');
+        return $this->factoryTab('Chatbot - Chat', 'AdminChatbotController');
+    }
+
+    private function installTabTwo()
+    {
+        return $this->factoryTab('Chatbot - Configuration', 'AdminChatbotConfigurationController');
+    }
+
+    private function uninstallChatbotTabOne()
+    {
+        return $this->uninstallTab('AdminChatbotController');
+    }
+
+    private function uninstallChatbotTabTwo()
+    {
+        return $this->uninstallTab('AdminChatbotConfigurationController');
+    }
+
+    private function factoryTab($tabName, $controllerName)
+    {
+        $tabId = (int) Tab::getIdFromClassName($controllerName);
+
         if (!$tabId) {
             $tabId = null;
         }
 
         $tab = new Tab($tabId);
         $tab->active = 1;
-        $tab->class_name = 'AdminChatbotController';
+        $tab->class_name = $controllerName;
         $tab->id_parent = (int) Tab::getIdFromClassName('AdminParentCustomer');
         $tab->position = Tab::getNewLastPosition($tab->id_parent);
+
         foreach (Language::getLanguages(false) as $lang) {
-            $tab->name[(int)$lang['id_lang']] = 'Chatbot';
+            $tab->name[(int)$lang['id_lang']] = $tabName;
         }
+
         $tab->module = $this->name;
+
         return $tab->add();
     }
 
-    private function uninstallChatbotTab()
+    private function uninstallTab($controllerName)
     {
-        $tabId = (int) Tab::getIdFromClassName('AdminChatbotController');
+        $tabId = (int) Tab::getIdFromClassName($controllerName);
         if (!$tabId) {
             return true;
         }
         $tab = new Tab($tabId);
+
         return $tab->delete();
     }
-
-
 }
