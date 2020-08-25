@@ -63,7 +63,7 @@ class AdminChatbotController extends FrameworkBundleAdminController
         }
 
         return $this->render('@Modules/chatbot/views/templates/admin/configure.html.twig', [
-            'var' => dump($repository->findSomething())
+            'var' => $repository->findSomething()
 //            'formSMTP' => $formSMTP->createView(),
 //            'formSendMail' => $formSendMail->createView()
         ]);

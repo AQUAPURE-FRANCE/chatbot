@@ -5,3 +5,11 @@ chatbot_admin_index:
     _controller: 'Chatbot\Controller\Admin\AdminChatbotController::index'
     _legacy_controller: 'AdminChatbotController'
     _legacy_link: 'AdminChatbotController'
+
+chatbot_admin_configuration_index:
+  path: chatbot/admin/configuration/index/
+  methods: [GET, POST]
+  defaults:
+    _controller: 'Chatbot\Controller\Admin\AdminChatbotConfigurationController::index'
+    _legacy_controller: 'AdminChatbotConfigurationController'
+    _legacy_link: 'AdminChatbotConfigurationController'
