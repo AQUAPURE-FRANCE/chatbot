@@ -27,3 +27,9 @@ services:
     arguments:
       - '@doctrine.dbal.default_connection'
       - '%database_prefix%'
+
+  chatbot_configuration_repository:
+    class: Chatbot\Repository\ChatbotConfigurationRepository
+    arguments:
+      - '@doctrine.dbal.default_connection'
+      - '%database_prefix%'
