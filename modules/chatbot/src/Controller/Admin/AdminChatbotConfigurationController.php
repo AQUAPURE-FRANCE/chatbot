@@ -1,71 +1,75 @@
 <?php
 
-namespace Chatbot\Controller\Admin;
+namespace ChatBot\Controller\Admin;
 
+use Chatbot\Form\ChatbotShopHourType;
+use Chatbot\Repository\ChatbotConfigurationRepository;
 use Configuration;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Chatbot\Entity\Chatbot;
-use Chatbot\Form\ChatbotMailerType;
-use Chatbot\Form\ChatbotSMTPType;
-use Chatbot\Repository\ChatbotRepository;
-use Chatbot\Service\SendMailService;
 
 class AdminChatbotConfigurationController extends FrameworkBundleAdminController
 {
     /**
-     * @param Request $req
+     * @param Request $request
      * @return RedirectResponse|Response|null
      */
-    public function index()
+    public function index(Request $request): Response
     {
-//        /** @var EntityManagerInterface $em */
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $object = new Chatbot();
-//
-//        /** @var ChatbotRepository $sfModuleRepository */
-//        $repository = $this->get('chatbot_repository'); // Or: $sfModuleRepository = $em->getRepository(Chatbot::class);
-//
-//        $formSMTP = $this->createform(ChatbotSMTPType::class);
-//        $formSMTP->handleRequest($req);
-//
-//        if ($formSMTP->isSubmitted() && $formSMTP->isValid()) {
-//            Configuration::updateGlobalValue('SF_TEMPLATE_SMTP_HOST', $formSMTP->getData()['smtp_host']);
-//            Configuration::updateGlobalValue('SF_TEMPLATE_SMTP_PORT', $formSMTP->getData()['smtp_port']);
-//            Configuration::updateGlobalValue('SF_TEMPLATE_SMTP_USERNAME', $formSMTP->getData()['smtp_username']);
-//            Configuration::updateGlobalValue('SF_TEMPLATE_SMTP_PASSWORD', $formSMTP->getData()['smtp_password']);
-//            Configuration::updateGlobalValue('SF_TEMPLATE_EMAIL_FROM', $formSMTP->getData()['smtp_from']);
-//            return $this->redirectToRoute('chatbot_admin');
-//        }
-//
-//        $formSendMail = $this->createform(ChatbotMailerType::class);
-//        $formSendMail->handleRequest($req);
-//
-//        /** Send mail */
-//        if ($formSendMail->isSubmitted() && $formSendMail->isValid()) {
-//            (new SendMailService())->sendMail(
-//                $formSendMail->getData()['mailer_subject'],
-//                $formSendMail->getData()['mailer_to'],
-//                $this->renderView(
-//                    '@Modules/chatbot/views/templates/admin/mail_template.html.twig',
-//                    ['test' => $formSendMail->getData()['mailer_message']]
-//                ),
-//                null
-//            );
-//            $this->addFlash('succes', 'Mail sent to ' . $formSendMail->getData()['mailer_to']);
-//
-//            return $this->redirectToRoute('admin_index');
-//        }
-//
+        /** @var EntityManagerInterface $em */
+        $em = $this->getDoctrine()->getManager();
+        /** @var ChatbotConfigurationRepository $chatbotConfigurationRepository */
+        $chatbotConfigurationRepository = $this->get('chatbot_configuration_repository');
+
+        $forms = [];
+        for ($i = 0; $i < count($this->getDayOfWeek()); $i++) {
+            $form = $this->createform(ChatbotShopHourType::class, null, [
+                'attr' => [
+                    'id' => $this->getDayOfWeek()[$i]
+                ],
+            ]);
+
+            $forms[] = $form;
+            $form->handleRequest($request);
+        }
+
         return $this->render('@Modules/chatbot/views/templates/admin/configure.html.twig', [
-            'var' => 'Tests'
-//            'formSMTP' => $formSMTP->createView(),
-//            'formSendMail' => $formSendMail->createView()
+            'week' => array_map(function ($day) {
+                return [
+                    'id' => $day->getId(),
+                    'isAvailable' => $day->getIsAvailable(),
+                    'defaultMessage' => $day->getDefaultMessage(),
+                    'timeStart' => !is_null($day->getTimeStart()) ? $day->getTimeStart()->format('Y-m-d\TH:i') : null,
+                    'timeEnd' => !is_null($day->getTimeStart()) ? $day->getTimeEnd()->format('Y-m-d\TH:i') : null
+                ];
+            }, $chatbotConfigurationRepository->findByKeyPrefix('PS_CHATBOT')),
+            'forms' => array_map(function ($form) {
+                return $form->createView();
+            }, $forms)
         ]);
+    }
+
+    private function getDayOfWeek()
+    {
+        $dayOfWeek = [];
+        $date = new \DateTime('now');
+        $date = $date->format('m/d/y');
+
+        $datetime = \DateTime::createFromFormat('m/d/y', $date);
+        $interval = new \DateInterval('P1D');
+
+        if ($datetime->format('D') !== 'Mon') {
+            $datetime->modify('last monday');
+        }
+
+        $week = new \DatePeriod($datetime, $interval, 6);
+        foreach ($week as $day) {
+            $dayOfWeek[] = $day->format('D');
+        }
+
+        return $dayOfWeek;
     }
 }

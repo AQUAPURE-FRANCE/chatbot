@@ -1,6 +1,6 @@
 <?php
 
-namespace ChatBot\Repository;
+namespace Chatbot\Repository;
 
 use Doctrine\DBAL\Connection;
 
@@ -25,5 +25,16 @@ class ChatbotConfigurationRepository
     {
         $this->connection = $connection;
         $this->databasePrefix = $databasePrefix;
+    }
+
+    public function findByKeyPrefix($keyPrefix)
+    {
+        return $this->connection->createQueryBuilder()
+            ->addSelect("c.id_configuration", "c.name", "c.value")
+            ->from($this->databasePrefix . 'configuration', 'c')
+            ->where('c.name LIKE :prefix')
+            ->setParameter('prefix', '%' . $keyPrefix . '%')
+            ->execute()
+            ->fetchAll();
     }
 }

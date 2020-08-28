@@ -1,0 +1,29 @@
+{% macro input(id, name, class, value, type = "text", disabled = false) %}
+    {% if disabled == true %}
+        <input type="{{ type == 'datetime' ? 'datetime-local' : type }}" id="{{ id }}" name="{{ name }}"
+               class="{{ class }}" value="{{ value|e }}"/>
+    {% else %}
+        <input type="{{ type == 'datetime' ? 'datetime-local' : type }}" id="{{ id }}" name="{{ name }}"
+               class="{{ class }}" value="{{ value|e }}" disabled/>
+    {% endif %}
+{% endmacro %}
+
+{% macro checkbox(id, name, class, value, checked = false) %}
+    {% if checked == true %}
+        <input type="checkbox" id="{{ id }}" name="{{ name }}"
+               class="{{ class }}" value="{{ value|e }}" checked="checked" value="{{ value|e }}"/>
+    {% else %}
+        <input type="checkbox" id="{{ id }}" name="{{ name }}"
+               class="{{ class }}" value="{{ value|e }}" value="{{ value|e }}"/>
+    {% endif %}
+{% endmacro %}
+
+{% macro textarea(id, name, class, value, disabled = false, rows = 10, cols = 40) %}
+    {% if disabled == true %}
+        <textarea id="{{ id }}" name="{{ name }}" class="{{ class }}" rows="{{ rows }}"
+                  cols="{{ cols }}">{{ value|e }}</textarea>
+    {% else %}
+        <textarea id="{{ id }}" name="{{ name }}" class="{{ class }}" rows="{{ rows }}"
+                  cols="{{ cols }}" disabled>{{ value|e }}</textarea>
+    {% endif %}
+{% endmacro %}
