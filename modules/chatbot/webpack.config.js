@@ -7,9 +7,9 @@ let config = {
         app: './assets/js/app.js'
     },
     output: {
-        path: path.resolve('../../admindev/chatbot-bundle'),
+        path: path.resolve('../../js/chatbot-bundle'),
         filename: 'chatbot-bundle.js',
-        publicPath: '/../../admindev/chatbot-bundle/'
+        publicPath: '/../../js/chatbot-bundle/'
     },
     module: {
         rules: [

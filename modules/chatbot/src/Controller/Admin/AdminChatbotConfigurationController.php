@@ -48,7 +48,8 @@ class AdminChatbotConfigurationController extends FrameworkBundleAdminController
             }, $chatbotConfigurationRepository->findByKeyPrefix('PS_CHATBOT')),
             'forms' => array_map(function ($form) {
                 return $form->createView();
-            }, $forms)
+            }, $forms),
+            'jsDir' => _PS_JS_DIR_
         ]);
     }
 
